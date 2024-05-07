@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  app:
+    container_name: ${APP_NAME}
+    build:
+      context: .
+      args:
+      - WORKDIR=${WORKDIR}
+    ports:
+      # - "${SERVICE_PORT}:${SERVICE_PORT}"
+      - 3000:3000
+    environment:
+      - TZ = "Asia/Seoul"
+      - NODE_ENV=${NODE_ENV}
+
+    # entrypoint: ["/bin/bash"]
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        ${WORKDIR}/entrypoint.sh
+    tty: true
