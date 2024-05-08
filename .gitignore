@@ -6,3 +6,4 @@ dist/src/
 undefined/
 dist/env/*.*
 !dist/env/.env.ref
+error.log
