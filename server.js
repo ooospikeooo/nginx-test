@@ -17,6 +17,10 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(3000, "localhost", () => {
+// server.listen(3000, "host.docker.internal", () => {
+//     console.log("Listening for request");
+// });
+
+server.listen(3000, () => {
     console.log("Listening for request");
 });

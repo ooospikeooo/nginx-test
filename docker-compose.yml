@@ -1,14 +1,24 @@
 version: "3.9"
 
 services:
-  app:
+  nginx:
+    image: nginx:1.21.5-alpine
+    ports:
+      - 3002:3001
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf # 여기서 오타나서 굉장히 삽질함ㅠ
+      - ./error.log:/var/log/nginx/error.log
+    container_name: service-proxy
+    depends_on:
+      - api
+
+  api:
     container_name: ${APP_NAME}
     build:
       context: .
       args:
       - WORKDIR=${WORKDIR}
     ports:
-      # - "${SERVICE_PORT}:${SERVICE_PORT}"
       - 3000:3000
     environment:
       - TZ = "Asia/Seoul"
@@ -20,3 +30,5 @@ services:
       - |
         ${WORKDIR}/entrypoint.sh
     tty: true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
